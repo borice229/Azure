@@ -1,0 +1,16 @@
+{
+	"name": "DSAzureSql_query_output",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "Borice",
+			"table": "TOP6sales"
+		}
+	}
+}
