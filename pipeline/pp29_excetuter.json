@@ -1,0 +1,27 @@
+{
+	"name": "pp29_excetuter",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pp30Paramters",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"x": 20
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
