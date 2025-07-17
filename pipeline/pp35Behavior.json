@@ -20,7 +20,7 @@
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "CB/Input",
+							"wildcardFolderPath": "YearWise",
 							"wildcardFileName": "*.*",
 							"enablePartitionDiscovery": false
 						},
@@ -29,10 +29,15 @@
 						}
 					},
 					"sink": {
-						"type": "BinarySink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "FlattenHierarchy"
+							"copyBehavior": "MergeFiles"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false
@@ -45,7 +50,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_CBOupBinary",
+						"referenceName": "DS_CBOup",
 						"type": "DatasetReference"
 					}
 				]
