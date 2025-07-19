@@ -95,6 +95,22 @@
 							"typeProperties": {
 								"source": {
 									"type": "DelimitedTextSource",
+									"additionalColumns": [
+										{
+											"name": "COUNTRY",
+											"value": {
+												"value": "@pipeline().parameters.ParamCountry",
+												"type": "Expression"
+											}
+										},
+										{
+											"name": "REGION",
+											"value": {
+												"value": "@variables('religionname')",
+												"type": "Expression"
+											}
+										}
+									],
 									"storeSettings": {
 										"type": "AzureBlobFSReadSettings",
 										"recursive": true,
@@ -102,18 +118,39 @@
 											"value": "@concat('Output/',pipeline().parameters.ParamCountry,'/',variables('religionname'))",
 											"type": "Expression"
 										},
-										"wildcardFileName": "*",
+										"wildcardFileName": "*.txt",
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
 										"type": "DelimitedTextReadSettings"
 									}
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
 									"referenceName": "DS_in_Region_folder",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_Invoicedata",
 									"type": "DatasetReference"
 								}
 							]
