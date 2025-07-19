@@ -1,0 +1,49 @@
+{
+	"name": "DS_Conl_fichier",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"nomdefichier": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().nomdefichier",
+					"type": "Expression"
+				},
+				"folderPath": "Output",
+				"fileSystem": "mycontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "OrderDate",
+				"type": "String"
+			},
+			{
+				"name": "ProductKey",
+				"type": "String"
+			},
+			{
+				"name": "EnglishProductName",
+				"type": "String"
+			},
+			{
+				"name": "SalesAmount",
+				"type": "String"
+			}
+		]
+	}
+}
