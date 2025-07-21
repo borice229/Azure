@@ -1,0 +1,59 @@
+{
+	"name": "DS_Ordercomplete",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "OrderDate",
+				"type": "date"
+			},
+			{
+				"name": "ProductKey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EnglishProductName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SalesAmount",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "TaxAmt",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "OrderQuantity",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "UnitPrice",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "TotalProductCost",
+				"type": "float",
+				"precision": 15
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "OrderComplete"
+		}
+	}
+}
