@@ -1,0 +1,61 @@
+{
+	"name": "DS_DataAssurance",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Recup_nomfichier": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().Recup_nomfichier",
+					"type": "Expression"
+				},
+				"folderPath": "Assurance",
+				"fileSystem": "mycontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ClientID",
+				"type": "String"
+			},
+			{
+				"name": "Nom",
+				"type": "String"
+			},
+			{
+				"name": "Prenom",
+				"type": "String"
+			},
+			{
+				"name": "Age",
+				"type": "String"
+			},
+			{
+				"name": "Genre",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "RevenuAnnuel",
+				"type": "String"
+			}
+		]
+	}
+}
