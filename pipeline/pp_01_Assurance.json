@@ -17,7 +17,13 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_DataAssurance",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Recup_nomfichier": {
+								"value": "@variables('Nom_fichier_csv')",
+								"type": "Expression"
+							}
+						}
 					},
 					"fieldList": [
 						"childItems"
@@ -42,11 +48,7 @@
 						]
 					}
 				],
-				"userProperties": [
-					{
-						"name": "Nom"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"items": {
 						"value": "@activity('Identifier les fichiers agence').output.childItems",
@@ -105,7 +107,8 @@
 								"sink": {
 									"type": "AzureSqlSink",
 									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
+									"sqlWriterUseTableLock": false,
+									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
 								"translator": {
@@ -119,10 +122,10 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_DataAssurance",
+									"referenceName": "DS_data_assurance_recup",
 									"type": "DatasetReference",
 									"parameters": {
-										"Recup_nomfichier": {
+										"fichiers": {
 											"value": "@variables('Nom_fichier_csv')",
 											"type": "Expression"
 										}
@@ -135,7 +138,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"tablename": {
-											"value": "@variables('Nom_fichier_csv')",
+											"value": "@replace(variables('Nom_fichier_csv'),'.csv','')",
 											"type": "Expression"
 										}
 									}

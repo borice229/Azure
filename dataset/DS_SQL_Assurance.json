@@ -16,7 +16,7 @@
 		"typeProperties": {
 			"schema": "dbo",
 			"table": {
-				"value": "@replace(dataset().tablename,'.csv','')",
+				"value": "@dataset().tablename",
 				"type": "Expression"
 			}
 		}
