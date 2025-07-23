@@ -1,0 +1,24 @@
+{
+	"name": "DS_SQL_MutlNH",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Param_TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().Param_TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}

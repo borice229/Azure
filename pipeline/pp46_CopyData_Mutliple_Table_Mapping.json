@@ -1,0 +1,242 @@
+{
+	"name": "pp46_CopyData_Mutliple_Table_Mapping",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetTableInfo",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select TableName,DataLakePath,DataFileName from tblMappings where IsActive = 1",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_ASQL",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Boucle",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "GetTableInfo",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GetTableInfo').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Set TableName",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "TableName",
+								"value": {
+									"value": "@item().TableName",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set FolderName",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "FolderName",
+								"value": {
+									"value": "@item().DataLakePath",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set fileName",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "FileName",
+								"value": {
+									"value": "@item().DataFileName",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "GetColumnMapping",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Set TableName",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "Set FolderName",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "Set fileName",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderStoredProcedureName": "[dbo].[sp_GetTableColumnMappings]",
+									"storedProcedureParameters": {
+										"TableName": {
+											"type": "String",
+											"value": {
+												"value": "@variables('TableName')",
+												"type": "Expression"
+											}
+										}
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "DS_ASQL",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "Copy data",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "GetColumnMapping",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"preCopyScript": {
+										"value": "@concat('TRUNCATE TABLE ',variables('TableName'))",
+										"type": "Expression"
+									},
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"value": "@json(activity('GetColumnMapping').output.firstRow.ColumnMapping)",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_NHfile",
+									"type": "DatasetReference",
+									"parameters": {
+										"Param_Filepath_Name": {
+											"value": "@concat(variables('FolderName'),'_',variables('FileName'))",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_SQL_MutlNH",
+									"type": "DatasetReference",
+									"parameters": {
+										"Param_TableName": {
+											"value": "@variables('TableName')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"TableName": {
+				"type": "String"
+			},
+			"FolderName": {
+				"type": "String"
+			},
+			"FileName": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
