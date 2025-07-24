@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "CC.csv",
 				"folderPath": "Data",
 				"fileSystem": "mycontainer"
 			},
