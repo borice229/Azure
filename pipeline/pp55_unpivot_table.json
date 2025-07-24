@@ -1,5 +1,5 @@
 {
-	"name": "pp55_pivot_data",
+	"name": "pp55_unpivot_table",
 	"properties": {
 		"activities": [
 			{
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "df_010_pivot",
+						"referenceName": "df_011_unpivot",
 						"type": "DataFlowReference"
 					},
 					"compute": {

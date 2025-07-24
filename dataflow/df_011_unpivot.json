@@ -1,0 +1,19 @@
+{
+	"name": "df_011_unpivot",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "Tablepivotcsv"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> Tablepivotcsv"
+			]
+		}
+	}
+}
