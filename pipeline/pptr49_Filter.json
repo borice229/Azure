@@ -1,9 +1,9 @@
 {
-	"name": "pp_48_Sort_transformat",
+	"name": "pptr49_Filter",
 	"properties": {
 		"activities": [
 			{
-				"name": "flux_sort_data",
+				"name": "flux data",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "df_003_Sortdata",
+						"referenceName": "df_004_filter",
 						"type": "DataFlowReference"
 					},
 					"compute": {
