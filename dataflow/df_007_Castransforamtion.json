@@ -1,0 +1,59 @@
+{
+	"name": "df_007_Castransforamtion",
+	"properties": {
+		"description": "Permet de convertir (transformer) un type de données",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Base1",
+						"type": "DatasetReference"
+					},
+					"name": "Readcsv"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "BASE_OP",
+						"type": "DatasetReference"
+					},
+					"name": "Destination"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ChangerLeTypeDonne"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderDate as string,",
+				"          ProductKey as short,",
+				"          Country as string,",
+				"          EnglishProductName as string,",
+				"          SalesAmount as string,",
+				"          TaxAmt as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Readcsv",
+				"Readcsv cast(output(",
+				"          OrderDate as date 'dd-MM-yyyy',",
+				"          SalesAmount as double,",
+				"          TaxAmt as double",
+				"     ),",
+				"     errors: true) ~> ChangerLeTypeDonne",
+				"ChangerLeTypeDonne sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['Ordeertransforme.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Destination"
+			]
+		}
+	}
+}
