@@ -1,0 +1,57 @@
+{
+	"name": "DS_inpdatapivot",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "DataenPivot.csv",
+				"folderPath": "Input",
+				"fileSystem": "mycontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "EnglishProductName",
+				"type": "String"
+			},
+			{
+				"name": "Australia",
+				"type": "String"
+			},
+			{
+				"name": "Canada",
+				"type": "String"
+			},
+			{
+				"name": "France",
+				"type": "String"
+			},
+			{
+				"name": "Germany",
+				"type": "String"
+			},
+			{
+				"name": "India",
+				"type": "String"
+			},
+			{
+				"name": "Italy",
+				"type": "String"
+			},
+			{
+				"name": "United States",
+				"type": "String"
+			}
+		]
+	}
+}

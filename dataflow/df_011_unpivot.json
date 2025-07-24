@@ -5,14 +5,56 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "DS_inpdatapivot",
+						"type": "DatasetReference"
+					},
 					"name": "Tablepivotcsv"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "BASE_OP",
+						"type": "DatasetReference"
+					},
+					"name": "Destination"
+				}
+			],
+			"transformations": [
+				{
+					"name": "unpivot"
+				}
+			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> Tablepivotcsv"
+				"source(output(",
+				"          EnglishProductName as string,",
+				"          Australia as double,",
+				"          Canada as double,",
+				"          France as double,",
+				"          Germany as double,",
+				"          India as double,",
+				"          Italy as double,",
+				"          {United States} as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Tablepivotcsv",
+				"Tablepivotcsv unpivot(output(",
+				"          Country as string,",
+				"          SaleAmount as double",
+				"     ),",
+				"     ungroupBy(EnglishProductName),",
+				"     lateral: true,",
+				"     ignoreNullPivots: true) ~> unpivot",
+				"unpivot sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['Dataretourpivot'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Destination"
 			]
 		}
 	}
