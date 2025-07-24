@@ -1,0 +1,56 @@
+{
+	"name": "df_008_SurrogateKey",
+	"properties": {
+		"description": "C'est une clé de subtitution",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Base1",
+						"type": "DatasetReference"
+					},
+					"name": "Readcsv"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "BASE_OP",
+						"type": "DatasetReference"
+					},
+					"name": "Destination"
+				}
+			],
+			"transformations": [
+				{
+					"name": "surrogateKey1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderDate as string,",
+				"          ProductKey as string,",
+				"          Country as string,",
+				"          EnglishProductName as string,",
+				"          SalesAmount as string,",
+				"          TaxAmt as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Readcsv",
+				"Readcsv keyGenerate(output(ID as long),",
+				"     startAt: 1L,",
+				"     stepValue: 10L) ~> surrogateKey1",
+				"surrogateKey1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['Data_with_ID.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Destination"
+			]
+		}
+	}
+}
