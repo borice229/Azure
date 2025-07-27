@@ -30,7 +30,7 @@
 			],
 			"transformations": [
 				{
-					"name": "RechercherProduct"
+					"name": "joinProduct"
 				}
 			],
 			"scriptLines": [
@@ -49,13 +49,14 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ReadProduct",
-				"ReadSales, ReadProduct lookup(ReadSales@ProductKey == ReadProduct@ProductKey,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> RechercherProduct",
-				"RechercherProduct sink(allowSchemaDrift: true,",
+				"ReadSales, ReadProduct join(ReadSales@ProductKey == ReadProduct@ProductKey,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinProduct",
+				"joinProduct sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['RechercheFile'],",
+				"     partitionFileNames:['JoinFile.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
