@@ -1,0 +1,72 @@
+{
+	"name": "df_015_parsetransform",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Excelorder",
+						"type": "DatasetReference"
+					},
+					"name": "Realexcel"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "BASE_OP",
+						"type": "DatasetReference"
+					},
+					"name": "Destination"
+				}
+			],
+			"transformations": [
+				{
+					"name": "parse1"
+				},
+				{
+					"name": "parse2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderId as integer,",
+				"          OrderDate as date,",
+				"          OrderDetails as string,",
+				"          BatchDetails as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Realexcel",
+				"Realexcel parse(orderdateill1 = OrderDetails ? (Item as string,",
+				"          Qty as integer,",
+				"          Price as integer),",
+				"     format: 'delimited',",
+				"     columnNamesAsHeader: false,",
+				"     columnDelimiter: '|',",
+				"     nullValue: '') ~> parse1",
+				"parse1 parse(BatchDet = BatchDetails ? (batchid as integer,",
+				"          site as string),",
+				"     format: 'json',",
+				"     documentForm: 'arrayOfDocuments') ~> parse2",
+				"parse2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['ParseFichier.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          OrderId,",
+				"          OrderDate,",
+				"          OrderDetails,",
+				"          BatchDetails,",
+				"          orderItems = orderdateill1.Item,",
+				"          BatchPrice = orderdateill1.Price",
+				"     )) ~> Destination"
+			]
+		}
+	}
+}

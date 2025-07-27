@@ -1,0 +1,38 @@
+{
+	"name": "DS_Excelorder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "OrderDetails",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "OrderDetails.xlsx",
+				"fileSystem": "mycontainer"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Prop_0",
+				"type": "String"
+			},
+			{
+				"name": "Prop_1",
+				"type": "String"
+			},
+			{
+				"name": "Prop_2",
+				"type": "String"
+			},
+			{
+				"name": "Prop_3",
+				"type": "String"
+			}
+		]
+	}
+}
