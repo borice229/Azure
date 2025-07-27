@@ -1,0 +1,60 @@
+{
+	"name": "df_016_stringl",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_EmpJson",
+						"type": "DatasetReference"
+					},
+					"name": "Readjson"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "BASE_OP",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "stringify1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          empid as integer,",
+				"          empname as string,",
+				"          salary as integer,",
+				"          phone as (mobile as integer, home as integer)[]",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'arrayOfDocuments') ~> Readjson",
+				"Readjson stringify(Phones = phone ? string,",
+				"     format: 'json') ~> stringify1",
+				"stringify1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['stringly.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          empid,",
+				"          empname,",
+				"          salary,",
+				"          phone,",
+				"          Phones",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
