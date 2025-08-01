@@ -7,6 +7,10 @@
 			"metadata": "Nom de fabrique de données",
 			"defaultValue": "bobomyfirstadf"
 		},
+		"LD_LocalFile_password": {
+			"type": "secureString",
+			"metadata": "Chaîne sécurisée pour « password » de « LD_LocalFile »"
+		},
 		"LS_1_accountKey": {
 			"type": "secureString",
 			"metadata": "Chaîne sécurisée pour « accountKey » de « LS_1 »"
@@ -14,6 +18,18 @@
 		"LS_ASQL_password": {
 			"type": "secureString",
 			"metadata": "Chaîne sécurisée pour « password » de « LS_ASQL »"
+		},
+		"SqlServer1_password": {
+			"type": "secureString",
+			"metadata": "Chaîne sécurisée pour « password » de « SqlServer1 »"
+		},
+		"LD_LocalFile_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\"
+		},
+		"LD_LocalFile_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "BORICE\\boric"
 		},
 		"LS_1_properties_typeProperties_url": {
 			"type": "string",
@@ -30,6 +46,18 @@
 		"LS_ASQL_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "boboadmin"
+		},
+		"SqlServer1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "BORICE"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorksDW"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "BORICE\\boric"
 		},
 		"containerUri": {
 			"type": "string",
@@ -98,6 +126,147 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'bobomyfirstadf_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "bobomyfirstadf_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'bobomyfirstadf_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "bobomyfirstadf_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LD_LocalFile_password": {
+						"value": "[parameters('LD_LocalFile_password')]"
+					},
+					"SqlServer1_password": {
+						"value": "[parameters('SqlServer1_password')]"
+					},
+					"LD_LocalFile_properties_typeProperties_host": {
+						"value": "[parameters('LD_LocalFile_properties_typeProperties_host')]"
+					},
+					"LD_LocalFile_properties_typeProperties_userId": {
+						"value": "[parameters('LD_LocalFile_properties_typeProperties_userId')]"
+					},
+					"SqlServer1_properties_typeProperties_server": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_server')]"
+					},
+					"SqlServer1_properties_typeProperties_database": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_database')]"
+					},
+					"SqlServer1_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'bobomyfirstadf_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "bobomyfirstadf_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'bobomyfirstadf_ArmTemplate_3')]"
+			]
+		},
+		{
+			"name": "bobomyfirstadf_ArmTemplate_5",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'bobomyfirstadf_ArmTemplate_4')]"
+			]
+		},
+		{
+			"name": "bobomyfirstadf_ArmTemplate_6",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_6.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'bobomyfirstadf_ArmTemplate_5')]"
+			]
+		},
+		{
+			"name": "bobomyfirstadf_ArmTemplate_7",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_7.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'bobomyfirstadf_ArmTemplate_6')]"
 			]
 		}
 	]

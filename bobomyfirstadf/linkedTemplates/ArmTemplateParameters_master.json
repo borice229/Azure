@@ -5,11 +5,23 @@
 		"factoryName": {
 			"value": "bobomyfirstadf"
 		},
+		"LD_LocalFile_password": {
+			"value": ""
+		},
 		"LS_1_accountKey": {
 			"value": ""
 		},
 		"LS_ASQL_password": {
 			"value": ""
+		},
+		"SqlServer1_password": {
+			"value": ""
+		},
+		"LD_LocalFile_properties_typeProperties_host": {
+			"value": "C:\\"
+		},
+		"LD_LocalFile_properties_typeProperties_userId": {
+			"value": "BORICE\\boric"
 		},
 		"LS_1_properties_typeProperties_url": {
 			"value": "https://bobodev.dfs.core.windows.net/"
@@ -22,6 +34,15 @@
 		},
 		"LS_ASQL_properties_typeProperties_userName": {
 			"value": "boboadmin"
+		},
+		"SqlServer1_properties_typeProperties_server": {
+			"value": "BORICE"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"value": "AdventureWorksDW"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"value": "BORICE\\boric"
 		},
 		"containerUri": {
 			"value": ""
