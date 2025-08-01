@@ -1,0 +1,28 @@
+{
+	"name": "pp_66_strigers",
+	"properties": {
+		"activities": [
+			{
+				"name": "X",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Name",
+					"value": "Yes"
+				}
+			}
+		],
+		"variables": {
+			"Name": {
+				"type": "String",
+				"defaultValue": "Borice"
+			}
+		},
+		"annotations": []
+	}
+}

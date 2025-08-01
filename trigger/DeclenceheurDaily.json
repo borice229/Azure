@@ -1,0 +1,24 @@
+{
+	"name": "DeclenceheurDaily",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pp_66_strigers",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 2,
+				"startTime": "2025-08-01T14:32:00",
+				"timeZone": "Romance Standard Time"
+			}
+		}
+	}
+}
