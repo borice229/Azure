@@ -1,0 +1,25 @@
+{
+	"name": "Storage_trigger1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pp67_StorageTriger",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/mycontainer/blobs/CB",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/c442c2b3-9872-4347-85ad-b7e6bebad7e5/resourceGroups/CDU-DEV/providers/Microsoft.Storage/storageAccounts/bobodev",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
