@@ -44,6 +44,9 @@
 		"SqlServer1_properties_typeProperties_userName": {
 			"value": "BORICE\\boric"
 		},
+		"trigger1_properties_typeProperties_scope": {
+			"value": "/subscriptions/c442c2b3-9872-4347-85ad-b7e6bebad7e5/resourceGroups/CDU-DEV/providers/Microsoft.Storage/storageAccounts/bobodev"
+		},
 		"containerUri": {
 			"value": ""
 		},

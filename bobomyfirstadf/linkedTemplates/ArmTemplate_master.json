@@ -59,6 +59,10 @@
 			"type": "string",
 			"defaultValue": "BORICE\\boric"
 		},
+		"trigger1_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/c442c2b3-9872-4347-85ad-b7e6bebad7e5/resourceGroups/CDU-DEV/providers/Microsoft.Storage/storageAccounts/bobodev"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI pour le compte de stockage contenant des modèles ARM liés"
@@ -262,6 +266,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"trigger1_properties_typeProperties_scope": {
+						"value": "[parameters('trigger1_properties_typeProperties_scope')]"
 					}
 				}
 			},
